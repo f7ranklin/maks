@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Камень, ножницы, бумага</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background: #f0f0f0;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    #score {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Камень, ножницы, бумага</h1>
+
+  <button onclick="play('камень')">🪨 Камень</button>
+  <button onclick="play('ножницы')">✂️ Ножницы</button>
+  <button onclick="play('бумага')">📜 Бумага</button>
+
+  <div id="result"></div>
+  <div id="score"></div>
+
+  <script>
+    let userScore = 0;
+    let computerScore = 0;
+    const maxScore = 3;
+
+    function play(userChoice) {
+      const choices = ["камень", "ножницы", "бумага"];
+      const computerChoice = choices[Math.floor(Math.random() * 3)];
+      let result = "";
+
+      if (userChoice === computerChoice) {
+        result = "Ничья!";
+      } else if (
+        (userChoice === "камень" && computerChoice === "ножницы") ||
+        (userChoice === "ножницы" && computerChoice === "бумага") ||
+        (userChoice === "бумага" && computerChoice === "камень")
+      ) {
+        result = "Вы выиграли раунд!";
+        userScore++;
+      } else {
+        result = "Вы проиграли раунд!";
+        computerScore++;
+      }
+
+      document.getElementById("result").innerHTML = `
+        Вы выбрали: <b>${userChoice}</b><br>
+        Компьютер выбрал: <b>${computerChoice}</b><br><br>
+        <span>${result}</span>
+      `;
+
+      document.getElementById("score").innerHTML = `
+        Счёт: Вы <b>${userScore}</b> — <b>${computerScore}</b> Компьютер
+      `;
+
+      // Проверка на победителя
+      if (userScore === maxScore || computerScore === maxScore) {
+        setTimeout(() => {
+          if (userScore > computerScore) {
+            alert("🎉 Вы выиграли игру!");
+          } else {
+            alert("😢 Компьютер выиграл игру!");
+          }
+          resetGame();
+        }, 200);
+      }
+    }
+
+    function resetGame() {
+      userScore = 0;
+      computerScore = 0;
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("score").innerHTML = "";
+    }
+  </script>
+</body>
+</html>
+
+        
+
+ 
+
